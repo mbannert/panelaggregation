@@ -9,15 +9,16 @@
 #' @param variable character name of the variable to focus on. The variable must be in the data.table
 #' @param weight character name of the data.table column that contains a weight. 
 #' @param by character vector of the columns to group by
+#' @export
 computeShares <- function(data_table, variable, weight, by) {
   
   old_key <- key(data_table)
   setkeyv(data_table, c(by, variable))
   
   if (is.null(weight)) {
-    res_dt <- data_table[CJ_unique(data_table, c(by, variable)), list(share = .N)]
+    res_dt <- data_table[doUniqueCJ(data_table, c(by, variable)), list(share = .N)]
   } else {
-    res_dt <- data_table[CJ_unique(data_table, c(by, variable)), list(share = sum(get(weight)))]
+    res_dt <- data_table[doUniqueCJ(data_table, c(by, variable)), list(share = sum(get(weight)))]
   }
   
   res_dt[is.na(share), share := 0][, share := share / sum(share), by = by]
