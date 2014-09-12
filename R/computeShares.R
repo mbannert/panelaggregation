@@ -9,8 +9,9 @@
 #' @param variable character name of the variable to focus on. The variable must be in the data.table
 #' @param weight character name of the data.table column that contains a weight. 
 #' @param by character vector of the columns to group by
+#' @param wide logical if true the result is returned in wide format (dcast).
 #' @export
-computeShares <- function(data_table, variable, weight, by) {
+computeShares <- function(data_table, variable, weight, by, wide = T) {
   
   old_key <- key(data_table)
   setkeyv(data_table, c(by, variable))
@@ -22,6 +23,15 @@ computeShares <- function(data_table, variable, weight, by) {
   }
   
   res_dt[is.na(share), share := 0][, share := share / sum(share), by = by]
+  
+  # we use the wide format by default as functions along the workflow
+  # make use of it.
+  if(wide){
+    f <- as.formula(paste(paste(by, collapse = "+"), "~", variable))
+    res_dt <- as.data.table(dcast.data.table(res_dt, f, value.var = "share"))
+    possible_answers <- setdiff(names(res_dt), by)
+    setnames(res_dt, c(by, paste0("item:", possible_answers)))
+  }
   
   setkeyv(data_table, old_key)
   res_dt

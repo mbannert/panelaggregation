@@ -3,7 +3,7 @@
 \alias{computeShares}
 \title{Compute Weighted Shares By Group}
 \usage{
-computeShares(data_table, variable, weight, by)
+computeShares(data_table, variable, weight, by, wide = T)
 }
 \arguments{
 \item{data_table}{a data.table}
@@ -13,6 +13,8 @@ computeShares(data_table, variable, weight, by)
 \item{weight}{character name of the data.table column that contains a weight.}
 
 \item{by}{character vector of the columns to group by}
+
+\item{wide}{logical if true the result is returned in wide format (dcast).}
 }
 \description{
 This function computes weighted shares from a data.table.
