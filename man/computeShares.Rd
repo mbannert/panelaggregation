@@ -14,7 +14,7 @@ computeShares(data_table, variable, weight, by, wide = T)
 
 \item{by}{character vector of the columns to group by}
 
-\item{wide}{logical if true the result is returned in wide format (dcast).}
+\item{wide}{logical if true the result is returned in wide format dcast.}
 }
 \description{
 This function computes weighted shares from a data.table.
@@ -22,6 +22,6 @@ computeShares is performance optimized and designed to
 work well in bulk operations. The function returns a data.table.
 }
 \author{
-Matthias Bannert, Gabriel Bucur, Oliver Müller
+Matthias Bannert, Gabriel Bucur, Oliver Mueller
 }
 

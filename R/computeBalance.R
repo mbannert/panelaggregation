@@ -10,6 +10,11 @@
  computeBalance <- function(data_table, multipliers = list("item:pos" = 1, "item:eq" = 0, "item:neg" = -1)) {
   data_table$balance <- 0
   
+  # get rid of the CRAN check NOTE, this only for getting the package CRAN ready
+  # see Matthew Dowle on
+  #http://stackoverflow.com/questions/8096313/no-visible-binding-for-global-variable-note-in-r-cmd-check
+  balance = NULL 
+  
   for(item in names(multipliers)) {
     data_table[, balance := balance + multipliers[[item]] * get(item)]
   }

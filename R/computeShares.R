@@ -4,12 +4,13 @@
 #' computeShares is performance optimized and designed to
 #' work well in bulk operations. The function returns a data.table.
 #' 
-#' @author Matthias Bannert, Gabriel Bucur, Oliver Müller
+#' @author Matthias Bannert, Gabriel Bucur, Oliver Mueller
 #' @param data_table a data.table
 #' @param variable character name of the variable to focus on. The variable must be in the data.table
 #' @param weight character name of the data.table column that contains a weight. 
 #' @param by character vector of the columns to group by
-#' @param wide logical if true the result is returned in wide format (dcast).
+#' @param wide logical if true the result is returned in wide format dcast.
+#' @import data.table
 #' @export
 computeShares <- function(data_table, variable, weight, by, wide = T) {
   
@@ -21,6 +22,11 @@ computeShares <- function(data_table, variable, weight, by, wide = T) {
   } else {
     res_dt <- data_table[doUniqueCJ(data_table, c(by, variable)), list(share = sum(get(weight)))]
   }
+  
+  # get rid of the CRAN check NOTE, this only for getting the package CRAN ready
+  # see Matthew Dowle on
+  #http://stackoverflow.com/questions/8096313/no-visible-binding-for-global-variable-note-in-r-cmd-check
+  share = NULL
   
   res_dt[is.na(share), share := 0][, share := share / sum(share), by = by]
   
