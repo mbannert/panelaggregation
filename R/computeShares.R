@@ -18,9 +18,13 @@ computeShares <- function(data_table, variable, weight, by, wide = T) {
   setkeyv(data_table, c(by, variable))
   
   if (is.null(weight)) {
-    res_dt <- data_table[doUniqueCJ(data_table, c(by, variable)), list(share = .N)]
+    # make sure .N is a double because data.table gives it to C which throws an error if integer and double are used
+    # in the same division.
+    res_dt <- data_table[doUniqueCJ(data_table, c(by, variable)), list(share = as.double(.N))]
   } else {
-    res_dt <- data_table[doUniqueCJ(data_table, c(by, variable)), list(share = sum(get(weight)))]
+    # do not use get instead of eval(as.name()) here because, if column name equals parameter name (in this case weight)
+    # you'll run into a name clash. 
+    res_dt <- data_table[doUniqueCJ(data_table, c(by, variable)), list(share = sum(eval(as.name(weight))))]
   }
   
   # get rid of the CRAN check NOTE, this only for getting the package CRAN ready
@@ -30,6 +34,7 @@ computeShares <- function(data_table, variable, weight, by, wide = T) {
   
   res_dt[is.na(share), share := 0][, share := share / sum(share), by = by]
   
+
   # we use the wide format by default as functions along the workflow
   # make use of it.
   if(wide){
