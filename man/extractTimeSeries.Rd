@@ -3,7 +3,8 @@
 \alias{extractTimeSeries}
 \title{Extract a Time Series from a Data.table}
 \usage{
-extractTimeSeries(data_table, time_column, group_list, freq, variable)
+extractTimeSeries(data_table, time_column, group_list, freq, item, variable,
+  prefix = "CH.KOF.IND")
 }
 \arguments{
 \item{data_table}{a data.table}
@@ -14,7 +15,13 @@ extractTimeSeries(data_table, time_column, group_list, freq, variable)
 
 \item{freq}{integer value either 4 denoting quarterly frequency or 12 denoting quarterly frequency}
 
-\item{variable}{character name of the column which contains the item that is extracted from the data.table}
+\item{item}{character name of the column which contains the item
+that is extracted from the data.table}
+
+\item{variable}{character name of the variable selected}
+
+\item{prefix}{character prefix attached to the dynamically generated key string to identify the time series. Recommend key format:
+ISOcountry.provider.source.aggregationLevel.selectedGroup.variable.item}
 }
 \description{
 This functions extracts time series from data.table columns and returns object of class ts.

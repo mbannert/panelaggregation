@@ -6,9 +6,14 @@
 #' @param time_column character name of the column which contains the time index
 #' @param group_list list
 #' @param freq integer value either 4 denoting quarterly frequency or 12 denoting quarterly frequency
-#' @param variable character name of the column which contains the item that is extracted from the data.table
+#' @param item character name of the column which contains the item
+#' that is extracted from the data.table
+#' @param variable character name of the variable selected 
+#' @param prefix character prefix attached to the dynamically generated key string to identify the time series. Recommend key format:
+#' ISOcountry.provider.source.aggregationLevel.selectedGroup.variable.item
 #' @export 
-extractTimeSeries <- function(data_table, time_column, group_list, freq, variable) {
+extractTimeSeries <- function(data_table, time_column, group_list, freq,
+                              item, variable, prefix = "CH.KOF.IND") {
   
   old_key <- key(data_table)
   setkeyv(data_table, names(group_list))
@@ -31,5 +36,19 @@ extractTimeSeries <- function(data_table, time_column, group_list, freq, variabl
   setkeyv(dt_subset, time_column)
   setkeyv(data_table, old_key)
   
-  ts(dt_subset[[variable]], start = c(year, period), frequency = freq)
+  # create output time series in order to add attributes
+  out_ts <- ts(dt_subset[[item]],
+               start = c(year, period),
+               frequency = freq)
+  
+  # generate key parts seperately to make key pasting easier to read
+  group_level <- paste(setdiff(names(group_list),
+                               time_column),collapse = "_")
+  ts_key <- paste(prefix, group_level,
+                  paste(unlist(group_list),collapse=":"),
+                  variable, item, sep = ".")
+  
+  attr(out_ts,"ts_key") <- toupper(ts_key)
+  out_ts  
+  
 }
