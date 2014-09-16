@@ -11,6 +11,7 @@
 #' @param by character vector of the columns to group by
 #' @param wide logical if true the result is returned in wide format dcast.
 #' @import data.table
+#' @example demo/aggregation.R
 #' @export
 computeShares <- function(data_table, variable, weight, by, wide = T) {
   

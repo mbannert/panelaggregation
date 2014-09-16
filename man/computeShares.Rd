@@ -21,6 +21,14 @@ This function computes weighted shares from a data.table.
 computeShares is performance optimized and designed to
 work well in bulk operations. The function returns a data.table.
 }
+\examples{
+# load library and dataset
+library(panelaggregation)
+data(btsdemo)
+head(btsdemo)
+computeShares(btsdemo,"question_1","weight",by = c("date_qtrly","group"))
+
+}
 \author{
 Matthias Bannert, Gabriel Bucur, Oliver Mueller
 }
