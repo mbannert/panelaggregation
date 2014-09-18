@@ -51,7 +51,13 @@ ts1
 # Plot a standard R ts using the plot method for ts
 plot(ts1,main = attributes(ts1)$ts_key)
 
-
+# DON'T RUN
+# Optionally you can store the series into a time series db using the
+# corresponding package... 
+# Note that you can use the attribute to specify a timeseries key dynamically ! 
+# library(timeseriesdb)
+# con <- dbConnect(PostgreSQL(),user = "yourname",dbname="yourdb",host = "yourhost")
+# storeTimeseries("ts1",attributes(ts1)$ts_key,"con")
 }
 \author{
 Matthias Bannert, Gabriel Bucur, Oliver Mueller
