@@ -1,3 +1,4 @@
+# TODO: add new weight columns to BTS demo
 # load library and dataset
 library(panelaggregation)
 data(btsdemo)
