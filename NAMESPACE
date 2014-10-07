@@ -2,7 +2,7 @@
 
 export(computeBalance)
 export(computeShares)
-export(computeWeightedMean)
+export(computeWeightedMeans)
 export(doUniqueCJ)
 export(extractTimeSeries)
 export(joinDataTables)
