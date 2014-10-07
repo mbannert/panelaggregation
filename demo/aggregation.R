@@ -10,7 +10,8 @@ levels(btsdemo$question_1) <- c("pos","eq","neg")
 
 # compute the weighted shares and display store in wide format 
 # to get a basis for further steps
-level1 <- computeShares(btsdemo,"question_1","weight",by = c("date_qtrly","group", "altGroup", "sClass"))
+level1 <- computeShares(btsdemo,"question_1","weight", 
+                        by = c("date_qtrly","group", "altGroup", "sClass"))
 
 # compute balance, don't have to do much here, because
 # (pos, eq, neg) is the default for the possible answers
@@ -31,7 +32,8 @@ plot(ts1, main = attributes(ts1)$ts_key)
 # Add weight column to the aggregated results
 # In order to join the tables, we need to know what weight to assign to each row.
 # This is done by having via a common key, for example c('group', 'altGroup').
-# In this example we would assign a different weight for each c('group', 'altGroup') combination (e.g. c('A', 'a')).
+# In this example we would assign a different weight for each 
+#   c('group', 'altGroup') combination (e.g. c('A', 'a')).
 btsweight1 <- btsdemo[, list(weight = sum(weight)), by = 'group']
 btsagg1 <- joinDataTables(level1_wbalance, btsweight1, 'group')
 
@@ -54,7 +56,8 @@ plot(ts2, main = attributes(ts2)$ts_key)
 # Add weight column to the aggregated results
 # In order to join the tables, we need to know what weight to assign to each row.
 # This is done by having via a common key, for example c('group', 'altGroup').
-# In this example we would assign a different weight for each c('group', 'altGroup') combination (e.g. c('A', 'a')).
+# In this example we would assign a different weight for each 
+#   c('group', 'altGroup') combination (e.g. c('A', 'a')).
 btsweight2 <- btsdemo[, list(weight = sum(weight)), by = 'sClass']
 btsagg2 <- joinDataTables(level2_balance, btsweight2, 'sClass')
 

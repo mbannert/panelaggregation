@@ -18,6 +18,11 @@ computeShares <- function(data_table, variable, weight, by, wide = T) {
   old_key <- key(data_table)
   setkeyv(data_table, c(by, variable))
   
+  # get rid of the CRAN check NOTE, this only for getting the package CRAN ready
+  # see Matthew Dowle on
+  #http://stackoverflow.com/questions/8096313/no-visible-binding-for-global-variable-note-in-r-cmd-check
+  .EACHI = NULL
+  
   if (is.null(weight)) {
     # make sure .N is a double because data.table gives it to C which throws an error if integer and double are used
     # in the same division.
