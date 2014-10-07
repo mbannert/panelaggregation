@@ -58,7 +58,8 @@ btsweight1 <- btsdemo[, list(weight = sum(weight)), by = 'group']
 btsagg1 <- joinDataTables(level1_wbalance, btsweight1, 'group')
 
 # Compute second level aggregation, this time on fewer columns and using a different set of weights.
-level2_balance <- computeWeightedMean(btsagg1, 'balance', 'weight', c("date_qtrly","group", "sClass"))
+level2_balance <- computeWeightedMeans(btsagg1, c('item:pos', 'item:eq', 'item:neg', 'balance'), 
+                                       'weight', c("date_qtrly","group", "sClass"))
 
 # Select a particular grouping combination and a timeseries that 
 # should be extracted from the level 2 aggregation.
@@ -80,7 +81,7 @@ btsweight2 <- btsdemo[, list(weight = sum(weight)), by = 'sClass']
 btsagg2 <- joinDataTables(level2_balance, btsweight2, 'sClass')
 
 # Compute third level of aggregation, on the whole sector, using yet another set of weights.
-level3_balance <- computeWeightedMean(btsagg2, 'balance', 'weight', c("date_qtrly", "sClass"))
+level3_balance <- computeWeightedMeans(btsagg2, 'balance', 'weight', c("date_qtrly", "sClass"))
 
 # Select a particular grouping combination and a timeseries that 
 # should be extracted from the level 2 aggregation.
