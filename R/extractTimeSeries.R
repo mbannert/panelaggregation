@@ -51,12 +51,15 @@ extractTimeSeries <- function(data_table, time_column, group_list, freq,
     group_value <- NULL
   } else {
     group_level <- paste(setdiff(names(group_list),
-                                 time_column), collapse = ":")
-    group_value <- paste(unlist(group_list), collapse = ":")
+                                 time_column), collapse = "_")
+    group_value <- paste(unlist(group_list), collapse = "_")
   }
   
   ts_key <- paste(c(prefix, group_level, group_value,
                     variable, item), collapse = ".")
+  
+  # substitute : with _
+  ts_key <- gsub("\\:","_",ts_key)
   
   attr(out_ts,"ts_key") <- toupper(ts_key)
   out_ts  
