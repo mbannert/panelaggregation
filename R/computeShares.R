@@ -47,7 +47,7 @@ computeShares <- function(data_table, variable, weight, by, wide = T) {
     f <- as.formula(paste(paste(by, collapse = "+"), "~", variable))
     res_dt <- as.data.table(dcast.data.table(res_dt, f, value.var = "share"))
     possible_answers <- setdiff(names(res_dt), by)
-    setnames(res_dt, c(by, paste0("item:", possible_answers)))
+    setnames(res_dt, c(by, paste0("item_", possible_answers)))
   }
   
   setkeyv(data_table, old_key)

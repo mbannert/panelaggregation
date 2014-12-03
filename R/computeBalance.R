@@ -7,7 +7,7 @@
 #' @param data_table a data.table in wide format containing item 
 #' @param multipliers list containing multipliers of items, assigned by item and column names
 #' @export
- computeBalance <- function(data_table, multipliers = list("item:pos" = 1, "item:eq" = 0, "item:neg" = -1)) {
+ computeBalance <- function(data_table, multipliers = list("item_pos" = 1, "item_eq" = 0, "item_neg" = -1)) {
   data_table$balance <- 0
   
   # get rid of the CRAN check NOTE, this only for getting the package CRAN ready
