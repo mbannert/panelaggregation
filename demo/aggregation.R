@@ -38,7 +38,7 @@ btsweight1 <- btsdemo[, list(weight = sum(weight)), by = 'group']
 btsagg1 <- joinDataTables(level1_wbalance, btsweight1, 'group')
 
 # Compute second level aggregation, this time on fewer columns and using a different set of weights.
-level2_balance <- computeWeightedMeans(btsagg1, c('item:pos', 'item:eq', 'item:neg', 'balance'), 
+level2_balance <- computeWeightedMeans(btsagg1, c('item_pos', 'item_eq', 'item_neg', 'balance'), 
                                        'weight', c("date_qtrly","group", "sClass"))
 
 # Select a particular grouping combination and a timeseries that 
