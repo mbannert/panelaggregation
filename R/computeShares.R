@@ -30,7 +30,10 @@ computeShares <- function(data_table, variable, weight, by, wide = T) {
   } else {
     # do not use get instead of eval(as.name()) here because, if column name equals parameter name (in this case weight)
     # you'll run into a name clash. 
-    res_dt <- data_table[doUniqueCJ(data_table, c(by, variable)), list(share = sum(eval(as.name(weight)))), by = .EACHI]
+    # add .. prefix to weight variable to avoid name clash with column name "weight", thanks Matt Dowle for the pointer that eval(as.name())
+    # is not the way to go here.
+    ..weight = weight
+    res_dt <- data_table[doUniqueCJ(data_table, c(by, variable)), list(share = sum(get(..weight))), by = .EACHI]
   }
   
   # get rid of the CRAN check NOTE, this only for getting the package CRAN ready

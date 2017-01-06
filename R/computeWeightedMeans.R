@@ -10,6 +10,7 @@
 #' @param weight character name of the data.table column that contains a weight. 
 #' @param by character vector of the columns to group by
 #' @import data.table
+#' @importFrom stats as.formula na.omit ts weighted.mean
 #' @example demo/aggregation.R
 #' @export
 computeWeightedMeans <- function(data_table, variables, weight, by) {
